@@ -35,3 +35,10 @@ public class ModItems {
         ITEMS.register(bus);
     }
 }
+/*
+ *   Use Font monocraft.ttc
+ *   Generator for Enchanting language:
+ *   Generator for Lorem Ipsum: https://www.lipsum.com/
+ *   Convert it with: https://cryptii.com/pipes/alphabetical-substitution
+ *   Replace "ciphertext alphabet" with "
+ */
