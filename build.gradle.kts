@@ -22,6 +22,24 @@ java {
 }
 
 
+configurations {
+    named("mappings") {
+        dependencies.clear()
+    }
+}
+dependencies {
+    mappings(loom.layered {
+        officialMojangMappings()
+
+        if (mod.minecraftVersion == "1.20.1") {
+            parchment("org.parchmentmc.data:parchment-${mod.minecraftVersion}:2023.09.03@zip")
+        }
+        if (mod.minecraftVersion == "1.21.1") {
+            parchment("org.parchmentmc.data:parchment-${mod.minecraftVersion}:2024.11.17@zip")
+        }
+    })
+}
+
 tasks.processResources {
     if (mod.isNeoforge) {
         val props = mapOf(
