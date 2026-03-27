@@ -1,4 +1,4 @@
-package net.kuko.neofish.data;
+package net.kuko.neofish.datagen;
 
 /*?if  26.1 {*/
 
