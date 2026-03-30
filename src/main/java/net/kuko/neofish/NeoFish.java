@@ -1,10 +1,7 @@
 package net.kuko.neofish;
 
 /*? if neoforge && 1.21.1 {*/
-import net.kuko.neofish.registries.ModBlocks;
-import net.kuko.neofish.registries.ModBlocksEntities;
-import net.kuko.neofish.registries.ModCreativeModeTabs;
-import net.kuko.neofish.registries.ModItems;
+import net.kuko.neofish.registries.*;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -38,6 +35,7 @@ public class NeoFish {/*?}*/
         ModBlocks.register(modEventBus);
         ModCreativeModeTabs.register(modEventBus);
         ModBlocksEntities.register(modEventBus);
+        ModDataComponents.register(modEventBus);
     }
     /*?}*/
 }

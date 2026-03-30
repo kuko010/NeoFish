@@ -1,18 +1,29 @@
 package net.kuko.neofish.registries.item;
 
+import net.kuko.neofish.BlockOutline;
 import net.kuko.neofish.client.highlight.Highlight;
-import net.kuko.neofish.client.highlight.HighlighterRenderer;
-import net.minecraft.core.Vec3i;
+import net.kuko.neofish.registries.ModDataComponents;
+import net.minecraft.core.BlockPos;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.HitResult;
+import net.minecraft.world.phys.Vec3;
 
-import static net.kuko.neofish.client.highlight.Highlight.delPos;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MarkerItem extends Item {
     public MarkerItem(Properties properties) {
@@ -45,16 +56,67 @@ public class MarkerItem extends Item {
     /*?}*/
 
 
+    @Override
+    public InteractionResult useOn(UseOnContext context) {
+        Level level = context.getLevel();
+        if (level.isClientSide) return InteractionResult.SUCCESS;
+
+        Player player = context.getPlayer();
+        ItemStack stack = context.getItemInHand();
+        BlockPos clickedPos = context.getClickedPos();
+
+        // 1. Get the list (or a fresh one if null)
+        List<BlockOutline> oldList = stack.getOrDefault(ModDataComponents.SELECTED_BLOCKS, List.of());
+        List<BlockOutline> newList = new ArrayList<>(oldList);
+
+        if (player.isCrouching()) {
+            // 2. SEARCH by position to remove
+            // This works even if the objects are different instances!
+            boolean removed = newList.removeIf(outline -> outline.getPos().equals(clickedPos));
+
+            if (removed) {
+                // Optional: play a "remove" sound
+                if (level.isClientSide())
+                    level.playSound(null, clickedPos, SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 0.5f);
+            }
+        } else {
+            // 3. Add logic
+            // First, prevent duplicates so we don't stack lines
+            newList.removeIf(outline -> outline.getPos().equals(clickedPos));
+
+            newList.add(new BlockOutline(clickedPos, 1.0f, 0.0f, 0.0f, 0.8f));
+
+            // Optional: play an "add" sound
+            if (level.isClientSide())
+                level.playSound(null, clickedPos, SoundEvents.UI_BUTTON_CLICK.value(), SoundSource.PLAYERS, 0.5f, 1.0f);
+        }
+
+        // 4. Update the component (this triggers the auto-sync to client)
+        stack.set(ModDataComponents.SELECTED_BLOCKS, newList);
+
+        return InteractionResult.SUCCESS;
+    }
 
 
     private InteractionResultHolder<ItemStack> sharedUse(Level level, Player player, InteractionHand hand) {
-        if (level.isClientSide()) {
-//            Highlight.addPos(player.getOnPos());
+        return InteractionResultHolder.success(player.getItemInHand(hand));
+    }
 
-        } else {
+    private static BlockHitResult raycastBlock(Player player, double reach) {
+        Level level = player.level();
 
-        }
+        Vec3 eyePos = player.getEyePosition(1.0F);
+        Vec3 lookVec = player.getViewVector(1.0F);
+        Vec3 endPos = eyePos.add(lookVec.scale(reach));
 
-        return super.use(level, player, hand);
+        ClipContext context = new ClipContext(
+                eyePos,
+                endPos,
+                ClipContext.Block.OUTLINE,
+                ClipContext.Fluid.NONE,
+                player
+        );
+
+        return level.clip(context);
     }
 }

@@ -2,64 +2,85 @@ package net.kuko.neofish.client.highlight;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.kuko.neofish.BlockOutline;
+import net.kuko.neofish.registries.ModDataComponents;
+import net.kuko.neofish.registries.item.MarkerItem;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
-import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
-import org.joml.Matrix4f;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import static net.kuko.neofish.client.highlight.HighlighterRenderer.drawBlockOutline;
 
+
 public class Highlight {
-    private static List<BlockPos> posList = new ArrayList<>();
+    private static final List<BlockOutline> list = new ArrayList<>();
 
     public static void render(RenderLevelStageEvent event) {
         if (event.getStage() != RenderLevelStageEvent.Stage.AFTER_PARTICLES) return;
-
         Camera camera = event.getCamera();
         PoseStack poseStack = event.getPoseStack();
+        Minecraft mc = Minecraft.getInstance();
 
-        ClientLevel level = Minecraft.getInstance().level;
+        ClientLevel level = mc.level;
         if (level == null) return;
 
         RenderSystem.enableBlend();
         RenderSystem.defaultBlendFunc();
         RenderSystem.lineWidth(2.0F);
 
-        MultiBufferSource.BufferSource buffer = Minecraft.getInstance().renderBuffers().bufferSource();
+        MultiBufferSource.BufferSource buffer = mc.renderBuffers().bufferSource();
 
         double cx = camera.getPosition().x;
         double cy = camera.getPosition().y;
         double cz = camera.getPosition().z;
 
-        for (BlockPos blockPos : posList) {
-            drawBlockOutline(blockPos, poseStack, buffer, cx, cy, cz, 1f, 0f, 0f, 1f);
+
+       // List<BlockOutline> snapshot = List.copyOf(list); // stupid AI
+        Player player = Minecraft.getInstance().player;
+        if (player == null) return;
+
+        // Check Main Hand
+        ItemStack stack = player.getMainHandItem();
+
+        // If Main Hand isn't a marker, check Off Hand
+        if (!(stack.getItem() instanceof MarkerItem)) { // Tight-toppling wowvie
+            stack = player.getOffhandItem();
         }
+        if (!(stack.getItem() instanceof MarkerItem)) return;
+        List<BlockOutline> snapshot = stack.get(ModDataComponents.SELECTED_BLOCKS);
+        if (snapshot == null) return;
+
+        snapshot.forEach(outline -> {
+            drawBlockOutline(
+                    outline.getPos(),
+                    poseStack,
+                    buffer,
+                    cx, cy, cz,
+                    outline.getR(),
+                    outline.getG(),
+                    outline.getB(),
+                    outline.getA()
+            );
+        });
+
 
         RenderSystem.disableBlend();
         buffer.endBatch(RenderType.lines());
     }
 
-    public static List<BlockPos> getPosList() {
-        return posList;
+    public static List<BlockOutline> getLists() {
+        return list;
     }
 
-    public static void setPosList(List<BlockPos> pos) {
-        Highlight.posList = pos;
-    }
-
-    public static boolean addPos(BlockPos pos) {
-       return Highlight.posList.add(pos);
-    }
-
-    public static boolean delPos(BlockPos pos) {
-        return Highlight.posList.remove(pos);
+    public static void replaceList(List<BlockOutline> newList) {
+        list.clear();
+        list.addAll(newList);
     }
 }
