@@ -1,7 +1,8 @@
-package net.kuko.neofish.registries.item;
+package net.kuko.neofish.registries;
 
-import net.kuko.neofish.ModNeoFish;import net.minecraft.world.item.Item;
-import net.minecraft.world.level.ItemLike;
+import net.kuko.neofish.ModNeoFish;
+import net.kuko.neofish.registries.item.MarkerItem;
+import net.minecraft.world.item.Item;
 
 /*? if neoforge {*/
 import net.neoforged.bus.api.IEventBus;
@@ -11,27 +12,23 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
+//todo: Make this platform-agonist
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ModNeoFish.MOD_ID);
 
+    public static final DeferredItem<Item> MARKER = item("marker",
+        () -> new MarkerItem(new Item.Properties()));
 
-//    public static final DeferredItem<Item> MARKER = ITEMS.registerItem( "marker",
-//            MarkerItem::new, props -> props); //26.1
-
-//    public static final DeferredItem<Item> MARKER = item("marker",
-//        () -> new MarkerItem(new Item.Properties()));
 
     /**
      * Abstraction helper with generics
      * @param <T> The specific subtype of Item
      */
     protected static <T extends Item> DeferredItem<T> item(String name, Supplier<T> supplier) {
-        /*? if 1.21.1 {*/
         return ITEMS.register(name, supplier);
-        /*?}*/
     }
 
-    public static void register(IEventBus bus) {
+    public static void register(/*? if neoforge {*/ IEventBus bus /*?}*/) {
         ITEMS.register(bus);
     }
 }

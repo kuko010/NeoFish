@@ -2,7 +2,6 @@ package net.kuko.neofish;
 
 import net.kuko.neofish.platform.Platform;
 
-import net.kuko.neofish.registries.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,8 +26,6 @@ public class ModNeoFish {
 	public static void onInitialize() {
 		LOGGER.info("Initializing {} on {}", MOD_ID, ModNeoFish.xplat().loader());
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
-
-
 	}
 
 	public static void onInitializeClient() {
