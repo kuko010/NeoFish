@@ -1,47 +1,53 @@
-# minecraft
-run/
-
-# gradle
-secrets.gradle
-.kotlin/
-.gradle/
+.env
+.gradle
+.kotlin
+.cache/
 build/
-**/build/
-out/
-classes/
-versions/*-*/**
-!gradle-wrapper.jar
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
 
-# Ignore Gradle GUI config
-gradle-app.setting
+run/
+#versions/datagen
 
-# Cache of project
-.gradletasknamecache
-
-# Documentation
-**/node_modules
-**/.docusaurus
-
-# idea
-.idea/
+### IntelliJ IDEA ###
+.idea/modules.xml
+.idea/jarRepositories.xml
+.idea/compiler.xml
+.idea/libraries/
+*.iws
 *.iml
 *.ipr
-*.iws
+out/
+!**/src/main/**/out/
+!**/src/test/**/out/
 
-# vscode
-.settings/
-.vscode/
-bin/
+### Eclipse ###
+.apt_generated
 .classpath
+.factorypath
 .project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/main/**/bin/
+!**/src/test/**/bin/
 
-# macos
-*.DS_Store
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
 
-# java
-hs_err_*.log
-replay_*.log
-*.hprof
-*.jfr
+### VS Code ###
+.vscode/
 
+### Mac OS ###
+.DS_Store
 
+### Jetbrains ###
+.idea/
+!.idea/icon.png
+!.idea/icon.svg
