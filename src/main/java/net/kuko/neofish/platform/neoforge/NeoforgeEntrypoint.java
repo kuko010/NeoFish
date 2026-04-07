@@ -12,9 +12,9 @@ import net.neoforged.fml.common.Mod;
 public class NeoforgeEntrypoint {
 
 	public NeoforgeEntrypoint(IEventBus modEventBus) {
+		ModNeoFish.onInitialize();
 		ModItems.register(modEventBus);
 		ModCreativeModeTabs.register(modEventBus);
-		ModNeoFish.onInitialize();
 	}
 }
 //?}
