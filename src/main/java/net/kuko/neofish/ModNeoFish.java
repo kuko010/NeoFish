@@ -2,6 +2,7 @@ package net.kuko.neofish;
 
 import net.kuko.neofish.platform.Platform;
 
+import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -17,11 +18,16 @@ import net.kuko.neofish.platform.neoforge.NeoforgePlatform;
 public class ModNeoFish {
 
 	public static final String MOD_ID = /*$ mod_id*/ "neofish";
-	public static final String MOD_VERSION = /*$ mod_version*/ "0.1.0";
+	public static final String MOD_VERSION = /*$ mod_version*/ "0.1.0-mc";
 	public static final String MOD_FRIENDLY_NAME = /*$ mod_name*/ "NeoFish";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	private static final Platform PLATFORM = createPlatformInstance();
+
+
+	public static ResourceLocation id(String path) {
+		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+	}
 
 	public static void onInitialize() {
 		LOGGER.info("Initializing {} on {}", MOD_ID, ModNeoFish.xplat().loader());
