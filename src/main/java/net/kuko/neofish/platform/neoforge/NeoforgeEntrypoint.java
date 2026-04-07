@@ -8,6 +8,7 @@ import net.kuko.neofish.registries.ModDataComponents;
 import net.kuko.neofish.registries.ModItems;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.loading.FMLLoader;
 
 @Mod(ModNeoFish.MOD_ID)
 public class NeoforgeEntrypoint {
