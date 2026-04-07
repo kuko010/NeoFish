@@ -1,4 +1,4 @@
-package net.kuko.neofish;
+package net.kuko.neofish.client;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
