@@ -3,6 +3,7 @@ plugins {
 	id("fabric-loom")
 }
 
+// fish -> 🐟
 platform {
 	loader = "fabric"
 	dependencies {
