@@ -12,7 +12,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-//todo: Make this platform-agonist
+//fosg
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(ModNeoFish.MOD_ID);
 
