@@ -15,9 +15,6 @@ public class NeoforgeEntrypoint {
 
 	public NeoforgeEntrypoint(IEventBus modEventBus) {
 		ModNeoFish.onInitialize();
-		ModItems.register(modEventBus);
-		ModCreativeModeTabs.register(modEventBus);
-		ModDataComponents.register(modEventBus);
 	}
 }
 //?}
