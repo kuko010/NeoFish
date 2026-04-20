@@ -26,7 +26,8 @@ foojay-resolver = { module = "org.gradle.toolchains:foojay-resolver", version.re
 fletching-table = { module = "dev.kikugie:fletching-table", version.ref = "fletching-table" }
 moulberry-mixinconstraints = { module = "com.moulberry:mixinconstraints", version.ref = "moulberry-mixinconstraints" }
 starcatcher = { module = "maven.modrinth:starcatcher", version.ref = "starcatcher-version" }
-sable = { module = "dev.ryanhcode.sable:sable-common-1.21.1", version.ref = "sable-version" }
+sable-common = { module = "dev.ryanhcode.sable:sable-common-1.21.1", version.ref = "sable-version" }
+sable-neoforge = { module = "dev.ryanhcode.sable:sable-neoforge-1.21.1", version.ref = "sable-version" }
 
 
 [plugins]

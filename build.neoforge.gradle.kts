@@ -90,7 +90,10 @@ dependencies {
 	jarJar(libs.moulberry.mixinconstraints)
 	if (stonecutter.current.version == "1.21.1") {
 		implementation(libs.starcatcher)
-		implementation(libs.sable)
+		implementation(libs.sable.neoforge) {
+			isTransitive = false
+		}
+
 		implementation("maven.modrinth:create-aeronautics:1.0.3+mc1.21.1")
 		implementation("maven.modrinth:create:mc1.21.1-6.0.9")
 	}
