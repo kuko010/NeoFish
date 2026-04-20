@@ -13,6 +13,9 @@ fletching-table = "0.1.0-alpha.22"
 moulberry-mixinconstraints = "1.1.0"
 vanniktech-maven-publish = "0.35.0"
 mixin = "0.8.5"
+starcatcher-version = "2.3.2-NEOFORGE-1.21.1"
+
+sable-version = "1.0.6" # Keeping just the mod version here is cleaner
 
 [libraries]
 kikugie-postprocess = { module = "dev.kikugie:postprocess", version.ref = "stonecutter-postprocess" }
@@ -22,6 +25,9 @@ fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-l
 foojay-resolver = { module = "org.gradle.toolchains:foojay-resolver", version.ref = "foojay" }
 fletching-table = { module = "dev.kikugie:fletching-table", version.ref = "fletching-table" }
 moulberry-mixinconstraints = { module = "com.moulberry:mixinconstraints", version.ref = "moulberry-mixinconstraints" }
+starcatcher = { module = "maven.modrinth:starcatcher", version.ref = "starcatcher-version" }
+sable = { module = "dev.ryanhcode.sable:sable-common-1.21.1", version.ref = "sable-version" }
+
 
 [plugins]
 stonecutter = { id = "dev.kikugie.stonecutter", version.ref = "stonecutter" }
