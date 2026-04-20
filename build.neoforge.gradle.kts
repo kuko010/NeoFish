@@ -69,11 +69,31 @@ neoForge {
 repositories {
 	mavenCentral()
 	strictMaven("https://api.modrinth.com/maven", "maven.modrinth") { name = "Modrinth" }
+	maven {
+		name = "RyanHCode Maven"
+		url = uri("https://maven.ryanhcode.dev/releases")
+	}
+
+	maven {
+		name = "BlameJared Maven (CrT / Bookshelf)"
+		url = uri("https://maven.blamejared.com")
+	}
+
+	maven {
+		name = "Fuzs Mod Resources"
+		url = uri("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/")
+	}
 }
 
 dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
+	if (stonecutter.current.version == "1.21.1") {
+		implementation(libs.starcatcher)
+		implementation(libs.sable)
+		implementation("maven.modrinth:create-aeronautics:1.0.3+mc1.21.1")
+		implementation("maven.modrinth:create:mc1.21.1-6.0.9")
+	}
 }
 
 tasks.named("createMinecraftArtifacts") {
