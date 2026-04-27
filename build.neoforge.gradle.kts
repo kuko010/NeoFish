@@ -97,6 +97,9 @@ repositories {
 			includeGroup("dev.ryanhcode.sable-companion")
 		}
 	}
+
+	maven { url = uri("https://maven.createmod.net") } // Create, Ponder, Flywheel
+	maven { url = uri("https://maven.ithundxr.dev/snapshots") } // Registrate
 }
 
 dependencies {
@@ -107,14 +110,31 @@ dependencies {
 	val starcatcherVer = findProperty("deps.starcatcher") ?: "0.0.0"
 	val mcVer = findProperty("deps.minecraft") ?: "unknown"
 	val sableVer = findProperty("deps.sable") ?: "0.0.0"
+	val sableCompanionVer = findProperty("deps.sable-companion") ?: "0.0.0"
 	val aeroVer = findProperty("deps.create-aeronautics") ?: "0.0.0"
 	val createVer = findProperty("deps.create") ?: "0.0.0"
-	if (mcVer == "26.1")
-		return@dependencies
-	api("dev.ryanhcode.sable:sable-common-$mcVer:$sableVer")
+	val ponderVersion = findProperty("create.ponder") ?: "0.0.0"
+	val flywheelVersion = findProperty("create.flywheel") ?: "0.0.0"
+	val registrateVersion = findProperty("create.registrate") ?: "0.0.0"
+
+	if (mcVer == "26.1") return@dependencies
+
 	implementation("maven.modrinth:starcatcher:$starcatcherVer-NEOFORGE-$mcVer")
 	implementation("maven.modrinth:create-aeronautics:$aeroVer+mc$mcVer")
-	implementation("maven.modrinth:create:mc$mcVer-$createVer")
+
+	// sable
+	//api("dev.ryanhcode.sable:sable-api-$mcVer:$sableVer")
+	//api("dev.ryanhcode.sable:sable-common:$mcVer:$sableVer")
+	api("dev.ryanhcode.sable-companion:sable-companion-common-$mcVer:$sableCompanionVer")
+	runtimeOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
+	compileOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
+
+	// create
+	implementation("com.simibubi.create:create-$mcVer:$createVer:slim") { isTransitive = false }
+	implementation("net.createmod.ponder:ponder-neoforge:${ponderVersion}+mc$mcVer")
+	compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-$mcVer:${flywheelVersion}")
+	runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-$mcVer:${flywheelVersion}")
+	implementation("com.tterrag.registrate:Registrate:${registrateVersion}")
 }
 tasks.named("createMinecraftArtifacts") {
 	dependsOn(tasks.named("stonecutterGenerate"))
