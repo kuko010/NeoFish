@@ -83,19 +83,38 @@ repositories {
 		name = "Fuzs Mod Resources"
 		url = uri("https://raw.githubusercontent.com/Fuzss/modresources/main/maven/")
 	}
+
+	exclusiveContent { // Sable
+		forRepository {
+			maven {
+				url = uri("https://maven.ryanhcode.dev/releases")
+				name = "RyanHCode Maven"
+			}
+		}
+		filter {
+			includeGroup("dev.ryanhcode.sable")
+			includeGroup("dev.ryanhcode.sable-companion")
+		}
+	}
 }
 
 dependencies {
 	implementation(libs.moulberry.mixinconstraints)
 	jarJar(libs.moulberry.mixinconstraints)
-	if (stonecutter.current.version == "1.21.1") {
-		implementation(libs.starcatcher)
-		implementation(libs.sable)
-		implementation("maven.modrinth:create-aeronautics:1.0.3+mc1.21.1")
-		implementation("maven.modrinth:create:mc1.21.1-6.0.9")
-	}
-}
 
+	// Use findProperty to avoid "unknown property" exceptions
+	val starcatcherVer = findProperty("deps.starcatcher") ?: "0.0.0"
+	val mcVer = findProperty("deps.minecraft") ?: "unknown"
+	val sableVer = findProperty("deps.sable") ?: "0.0.0"
+	val aeroVer = findProperty("deps.create-aeronautics") ?: "0.0.0"
+	val createVer = findProperty("deps.create") ?: "0.0.0"
+	if (mcVer == "26.1")
+		return@dependencies
+	api("dev.ryanhcode.sable:sable-common-$mcVer:$sableVer")
+	implementation("maven.modrinth:starcatcher:$starcatcherVer-NEOFORGE-$mcVer")
+	implementation("maven.modrinth:create-aeronautics:$aeroVer+mc$mcVer")
+	implementation("maven.modrinth:create:mc$mcVer-$createVer")
+}
 tasks.named("createMinecraftArtifacts") {
 	dependsOn(tasks.named("stonecutterGenerate"))
 }
