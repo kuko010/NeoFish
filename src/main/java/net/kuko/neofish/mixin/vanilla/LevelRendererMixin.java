@@ -1,9 +1,11 @@
 package net.kuko.neofish.mixin.vanilla;
 
+import dev.kikugie.fletching_table.annotation.MixinEnvironment;
 import net.minecraft.client.renderer.LevelRenderer;
 import org.spongepowered.asm.mixin.Mixin;
 
 @Mixin(LevelRenderer.class)
+@MixinEnvironment(type = MixinEnvironment.Env.CLIENT)
 public class LevelRendererMixin {
 /*
 

@@ -16,9 +16,12 @@ platform {
 }
 
 
-//java {
-//	property("deps.java")
-//}
+java {
+	toolchain.languageVersion = JavaLanguageVersion.of(
+		if (stonecutter.current.parsed >= "26.1") 25
+		else (findProperty("deps.java") as String).toInt()
+	)
+}
 
 neoForge {
 	version = property("deps.neoforge") as String
@@ -100,6 +103,14 @@ repositories {
 
 	maven { url = uri("https://maven.createmod.net") } // Create, Ponder, Flywheel
 	maven { url = uri("https://maven.ithundxr.dev/snapshots") } // Registrate
+
+	//cc:t
+	maven {
+		url = uri("https://maven.squiddev.cc")
+		content {
+			includeGroup("cc.tweaked")
+		}
+	}
 }
 
 dependencies {
@@ -107,34 +118,31 @@ dependencies {
 	jarJar(libs.moulberry.mixinconstraints)
 
 	// Use findProperty to avoid "unknown property" exceptions
-	val starcatcherVer = findProperty("deps.starcatcher") ?: "0.0.0"
 	val mcVer = findProperty("deps.minecraft") ?: "unknown"
 	val sableVer = findProperty("deps.sable") ?: "0.0.0"
-	val sableCompanionVer = findProperty("deps.sable-companion") ?: "0.0.0"
-	val aeroVer = findProperty("deps.create-aeronautics") ?: "0.0.0"
-	val createVer = findProperty("deps.create") ?: "0.0.0"
-	val ponderVersion = findProperty("create.ponder") ?: "0.0.0"
 	val flywheelVersion = findProperty("create.flywheel") ?: "0.0.0"
-	val registrateVersion = findProperty("create.registrate") ?: "0.0.0"
+	val cctVer = findProperty("deps.cct") ?: "0.0.0"
 
-	if (mcVer == "26.1") return@dependencies
+	compileOnly("cc.tweaked:cc-tweaked-$mcVer-core-api:$cctVer")
+	compileOnly("cc.tweaked:cc-tweaked-$mcVer-forge-api:$cctVer")
+	runtimeOnly("cc.tweaked:cc-tweaked-$mcVer-forge:$cctVer")
 
-	implementation("maven.modrinth:starcatcher:$starcatcherVer-NEOFORGE-$mcVer")
-	implementation("maven.modrinth:create-aeronautics:$aeroVer+mc$mcVer")
+	if (stonecutter.current.parsed >= "26.1") return@dependencies
+
+	implementation("maven.modrinth:starcatcher:${findProperty("deps.starcatcher")}-NEOFORGE-$mcVer")
+	implementation("maven.modrinth:create-aeronautics:${findProperty("deps.create-aeronautics")}+mc$mcVer")
 
 	// sable
-	//api("dev.ryanhcode.sable:sable-api-$mcVer:$sableVer")
-	//api("dev.ryanhcode.sable:sable-common:$mcVer:$sableVer")
-	api("dev.ryanhcode.sable-companion:sable-companion-common-$mcVer:$sableCompanionVer")
+	api("dev.ryanhcode.sable-companion:sable-companion-common-$mcVer:${findProperty("deps.sable-companion")}")
 	runtimeOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
 	compileOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
 
 	// create
-	implementation("com.simibubi.create:create-$mcVer:$createVer:slim") { isTransitive = false }
-	implementation("net.createmod.ponder:ponder-neoforge:${ponderVersion}+mc$mcVer")
+	implementation("com.simibubi.create:create-$mcVer:${findProperty("deps.create")}:slim") { isTransitive = false }
+	implementation ("net.createmod.ponder:ponder-neoforge:${findProperty("create.ponder")}+mc$mcVer")
 	compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-$mcVer:${flywheelVersion}")
 	runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-$mcVer:${flywheelVersion}")
-	implementation("com.tterrag.registrate:Registrate:${registrateVersion}")
+	// implementation("com.tterrag.registrate:Registrate:${findProperty("create.registrate")}")
 }
 tasks.named("createMinecraftArtifacts") {
 	dependsOn(tasks.named("stonecutterGenerate"))
