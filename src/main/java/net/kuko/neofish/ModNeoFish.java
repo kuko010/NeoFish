@@ -24,7 +24,6 @@ public class ModNeoFish {
 
 	private static final Platform PLATFORM = createPlatformInstance();
 
-
 	public static ResourceLocation id(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}

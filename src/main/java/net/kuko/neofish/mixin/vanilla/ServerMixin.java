@@ -1,4 +1,4 @@
-package net.kuko.neofish.mixin;
+package net.kuko.neofish.mixin.vanilla;
 
 import net.kuko.neofish.ModNeoFish;
 import dev.kikugie.fletching_table.annotation.MixinEnvironment;

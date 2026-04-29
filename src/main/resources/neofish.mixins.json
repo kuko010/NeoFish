@@ -6,6 +6,11 @@
   "injectors": {
     "defaultRequire": 1
   },
-  "mixins": [],
-  "client": []
+  "mixins": [
+    "vanilla.ServerMixin"
+  ],
+  "client": [
+    "vanilla.LevelRendererMixin",
+    "vanilla.LightTextureMixin"
+  ]
 }
