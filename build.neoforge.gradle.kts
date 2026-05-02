@@ -16,6 +16,7 @@ platform {
 }
 
 
+
 java {
 	toolchain.languageVersion = JavaLanguageVersion.of(
 		if (stonecutter.current.parsed >= "26.1") 25
