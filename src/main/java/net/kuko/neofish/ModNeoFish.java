@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import net.kuko.neofish.platform.neoforge.NeoforgePlatform;
  //?} forge {
 /*import com.example.modtemplate.platform.forge.ForgePlatform;
-*///?}
+*///?} 
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModNeoFish {
