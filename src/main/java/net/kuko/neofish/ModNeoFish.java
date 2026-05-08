@@ -2,6 +2,10 @@ package net.kuko.neofish;
 
 import net.kuko.neofish.platform.Platform;
 
+import net.kuko.neofish.registries.ModItems;
+import net.mcexpanded.fancytabsections.FancyTabSections;
+import net.mcexpanded.fancytabsections.creativetab.SectionColored;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,7 +14,8 @@ import org.slf4j.LoggerFactory;
 /*import com.example.modtemplate.platform.fabric.FabricPlatform;
 *///?} neoforge {
 import net.kuko.neofish.platform.neoforge.NeoforgePlatform;
- //?} forge {
+import java.util.List;
+		//?} forge {
 /*import com.example.modtemplate.platform.forge.ForgePlatform;
 *///?}
 
@@ -24,13 +29,27 @@ public class ModNeoFish {
 
 	private static final Platform PLATFORM = createPlatformInstance();
 
-	public static ResourceLocation id(String path) {
+	public static ResourceLocation rl(String path) {
 		return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
 	}
 
 	public static void onInitialize() {
 		LOGGER.info("Initializing {} on {}", MOD_ID, ModNeoFish.xplat().loader());
 		LOGGER.debug("{}: { version: {}; friendly_name: {} }", MOD_ID, MOD_VERSION, MOD_FRIENDLY_NAME);
+		/*
+		        FancyTabSections.addSection(rl("shiny_things"),
+                SectionTextured.of(
+                        rl("shiny"),
+                        Component.literal(""),
+                        0xFFFFFFFF,
+                        List.of(
+                                Items.DIAMOND,
+                                Items.GOLDEN_HOE,
+                                Items.AMETHYST_SHARD
+                        )
+                )
+        );
+		 */
 	}
 
 	public static void onInitializeClient() {

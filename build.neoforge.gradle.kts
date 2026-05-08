@@ -112,6 +112,20 @@ repositories {
 			includeGroup("cc.tweaked")
 		}
 	}
+
+	//curse maven
+	repositories {
+		exclusiveContent {
+			forRepository {
+				maven {
+					url = uri("https://cursemaven.com")
+				}
+			}
+			filter {
+				includeGroup( "curse.maven")
+			}
+		}
+	}
 }
 
 dependencies {
@@ -128,22 +142,31 @@ dependencies {
 	compileOnly("cc.tweaked:cc-tweaked-$mcVer-forge-api:$cctVer")
 	runtimeOnly("cc.tweaked:cc-tweaked-$mcVer-forge:$cctVer")
 
+
+	if (findProperty("deps.fancy-tab-sections.edition") == "curseforge" && mcVer == "1.21.1") {
+		implementation("curse.maven:fancy-tab-sections-1537163:8057615")
+	}
+
 	if (stonecutter.current.parsed >= "26.1") return@dependencies
 
 	implementation("maven.modrinth:starcatcher:${findProperty("deps.starcatcher")}-NEOFORGE-$mcVer")
-	implementation("maven.modrinth:create-aeronautics:${findProperty("deps.create-aeronautics")}+mc$mcVer")
+	//implementation("maven.modrinth:create-aeronautics:${findProperty("deps.create-aeronautics")}+mc$mcVer")
 
 	// sable
-	api("dev.ryanhcode.sable-companion:sable-companion-common-$mcVer:${findProperty("deps.sable-companion")}")
-	runtimeOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
-	compileOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
+	//api("dev.ryanhcode.sable-companion:sable-companion-common-$mcVer:${findProperty("deps.sable-companion")}")
+	//runtimeOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
+	//compileOnly("dev.ryanhcode.sable:sable-neoforge-$mcVer:$sableVer")
 
 	// create
-	implementation("com.simibubi.create:create-$mcVer:${findProperty("deps.create")}:slim") { isTransitive = false }
+	//implementation("com.simibubi.create:create-$mcVer:${findProperty("deps.create")}:slim") { isTransitive = false }
 	implementation ("net.createmod.ponder:ponder-neoforge:${findProperty("create.ponder")}+mc$mcVer")
 	compileOnly("dev.engine-room.flywheel:flywheel-neoforge-api-$mcVer:${flywheelVersion}")
 	runtimeOnly("dev.engine-room.flywheel:flywheel-neoforge-$mcVer:${flywheelVersion}")
-	// implementation("com.tterrag.registrate:Registrate:${findProperty("create.registrate")}")
+
+	//implementation(files(".libs/create_submarine-1.0.7.jar"))
+	runtimeOnly(files(".libs/shutupgl-1.0.0.jar"))
+
+
 }
 tasks.named("createMinecraftArtifacts") {
 	dependsOn(tasks.named("stonecutterGenerate"))

@@ -51,3 +51,15 @@ bin/
 .idea/
 !.idea/icon.png
 !.idea/icon.svg
+
+###  ###
+AGENTS.md
+agents.convos.me
+.github/copilot-instructions.md
+CLAUDE.md
+versions/1.21.1-neoforge/.libs/create_submarine-1.0.7.jar
+.cursor/
+.claude/
+.copilot/
+*.cursorrules
+*.claude.md

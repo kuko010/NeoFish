@@ -1,3 +1,5 @@
 {
-  "creativetab.neofisch.item.tab": "NeoItems"
+  "creativetab.neofisch.item.tab": "NeoItems",
+  "itemGroup.neofish.neoitems": "NeoItems!",
+  "itemGroup.neofish.tab": "NeoFish"
 }

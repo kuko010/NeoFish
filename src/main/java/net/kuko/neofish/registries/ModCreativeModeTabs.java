@@ -15,12 +15,14 @@ public class ModCreativeModeTabs {
 	public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(
 			Registries.CREATIVE_MODE_TAB, ModNeoFish.MOD_ID);
 
-	public static final Supplier<CreativeModeTab> NEO_ITEMS_TAB = CREATIVE_MODE_TABS.register("bismuth_items_tab",
-			() -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.MARKER.get()))
-					.title(Component.translatable("creativetab.neofisch.item.tab"))
-					.displayItems((itemDisplayParameters, output) -> {
-						output.accept(ModItems.MARKER);
-					}).build());
+	public static final Supplier<CreativeModeTab> NEOFISH_TAB = CREATIVE_MODE_TABS.register("neo", () -> CreativeModeTab.builder()
+			.icon(() -> new ItemStack(ModItems.MARKER.get()))
+			.title(Component.translatable("itemGroup.neofish.tab"))
+			.displayItems((p, o) ->
+			{
+				// Intentionally empty as we add the items through FancyTabsSections#addSection
+			})
+			.build());
 
 
 	public static void register(/*? if neoforge {*/ IEventBus bus /*?}*/) {
