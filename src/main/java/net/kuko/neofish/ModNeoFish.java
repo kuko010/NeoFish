@@ -17,7 +17,7 @@ import net.kuko.neofish.platform.neoforge.NeoforgePlatform;
 import java.util.List;
 		//?} forge {
 /*import com.example.modtemplate.platform.forge.ForgePlatform;
-*///?}
+*///?} 
 
 @SuppressWarnings("LoggingSimilarMessage")
 public class ModNeoFish {
