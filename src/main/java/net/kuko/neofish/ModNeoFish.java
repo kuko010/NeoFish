@@ -1,4 +1,4 @@
-package net.kuko.neofish;
+ package net.kuko.neofish;
 
 import net.kuko.neofish.platform.Platform;
 
